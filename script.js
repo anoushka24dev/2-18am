@@ -1,34 +1,33 @@
 const scene = document.getElementById("scene");
 
 const framesOn = [
-  "218am1.png",  // open eye lamp on
-  "218am2.png",  // closed eye lamp on
-  "218am3.png"   // open eye lamp on
+  "218am1.png",
+  "218am2.png",
+  "218am3.png"
 ];
 
-const frameOff = "218am4.png"; // closed eye lamp off
+const framesOff = [
+  "218am4.png",
+  "218am5.png",
+  "218am6.png"
+];
 
-let currentFrame = 0;
 let lampOn = true;
+let currentFrame = 0;
 
 function animate() {
-  if (lampOn) {
-    scene.src = framesOn[currentFrame];
-    currentFrame = (currentFrame + 1) % framesOn.length;
-  }
+  const activeFrames = lampOn ? framesOn : framesOff;
+
+  scene.src = activeFrames[currentFrame];
+  currentFrame = (currentFrame + 1) % activeFrames.length;
 }
 
 let interval = setInterval(animate, 500);
 
-// Click to toggle lamp
 scene.addEventListener("click", () => {
   lampOn = !lampOn;
+  currentFrame = 0; // reset animation when switching
+}); 
 
-  if (!lampOn) {
-    clearInterval(interval);
-    scene.src = frameOff;
-  } else {
-    currentFrame = 0;
-    interval = setInterval(animate, 500);
-  }
-});
+
+
